@@ -3,15 +3,8 @@
 const db = require('../db')
 
 class usersDB {
-    getUser(id) {
-        db.query(
-            'SELECT * FROM users WHERE id = ?',
-            id,
-            (error, results, fields) => {
-                if (error) throw error
-                return results[0]
-            }
-        )
+    getUser(id, callback) {
+        db.query('SELECT * FROM users WHERE id = ?', id, callback)
     }
 
     createUser(user) {
