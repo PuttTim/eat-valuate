@@ -4,10 +4,7 @@ const argon2 = require('argon2')
 
 const usersDB = new _usersDB()
 
-const argonOptions = {
-    type: +process.env.ENCRYPT_TYPE, // Uses the password type of argon2 algorithm
-    hashLength: +process.env.HASH_LENGTH
-}
+const argonOptions = {}
 
 function getUserById(request, respond) {
     let id = parseInt(request.params.id)
@@ -23,6 +20,8 @@ function getUserById(request, respond) {
 async function createUser(request, respond) {
     console.log(request.body.gender)
 
+    console.log(argonOptions)
+
     let password
     try {
         password = await argon2.hash(request.body.password, argonOptions)
@@ -30,7 +29,7 @@ async function createUser(request, respond) {
         console.log(error)
     }
     const user = new User(
-        'id',
+        null,
         request.body.username,
         request.body.email,
         password,
