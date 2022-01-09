@@ -5,7 +5,10 @@ const { v4: uuidv4 } = require('uuid')
 
 const usersDB = new _usersDB()
 
-const argonOptions = {}
+const argonOptions = {
+    hashLength: 50,
+    type: 1 // Uses argon2i which is preferred for password hashing.
+}
 
 function getUserById(request, respond) {
     usersDB.selectUser(parseInt(request.params.id), (error, results) => {

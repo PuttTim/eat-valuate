@@ -3,7 +3,7 @@ const db = require('../db')
 class usersDB {
     selectUser(id, callback) {
         db.query(
-            'SELECT users.username, users.fullname, users.country, users.profile_picture_path, AVG(reviews.rating) AS avg_rating, COUNT(DISTINCT review_photos.id) AS photos_count FROM users LEFT JOIN reviews ON users.id = reviews.user_id LEFT JOIN review_photos ON users.id = review_photos.user_id WHERE users.id = ?',
+            'SELECT users.username, users.fullname, users.country, users.profile_picture_path, AVG(reviews.rating) AS avg_rating FROM users LEFT JOIN reviews ON users.id = reviews.user_id WHERE users.id = ?',
             id,
             callback
         )
