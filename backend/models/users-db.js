@@ -2,7 +2,11 @@ const db = require('../db')
 
 class usersDB {
     selectUser(id, callback) {
-        db.query('SELECT * FROM users WHERE id = ?', id, callback)
+        db.query(
+            'SELECT users.username, users.fullname, users.country, users.profile_picture_path, AVG(reviews.rating) AS avg_rating, COUNT(DISTINCT review_photos.id) AS photos_count FROM users LEFT JOIN reviews ON users.id = reviews.user_id LEFT JOIN review_photos ON users.id = review_photos.user_id WHERE users.id = ?',
+            id,
+            callback
+        )
     }
 
     insertUser(user, callback) {
@@ -20,6 +24,29 @@ class usersDB {
                 user.mobile_number,
                 user.profile_picture_path
             ],
+            callback
+        )
+    }
+
+    findUserCredentials(username, callback) {
+        db.query(
+            'SELECT username, password FROM users WHERE username = ?',
+            username,
+            callback
+        )
+    }
+
+    deleteUser(id, callback) {
+        db.query('DELETE FROM users WHERE id = ?', id, callback)
+    }
+
+    updateUser(request, callback) {
+        // MySQL-nodejs is able to match key and value pairs in the query.
+        // In this case, all the keys of request.body is parsed with its value.
+        // i.e if request.body has a "zipcode" key, it will change the query to "UPDATE users SET zipcode = request.body.zipcode"
+        db.query(
+            'UPDATE users SET ? WHERE id = ?',
+            [request.body, parseInt(request.params.id)],
             callback
         )
     }

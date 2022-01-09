@@ -6,7 +6,8 @@ const dbConfig = {
     user: 'root',
     password: 'admin',
     connectionLimit: 5,
-    database: 'eat-valuate'
+    database: 'eat-valuate',
+    multipleStatements: true
 }
 
 const pool = mysql.createPool(dbConfig)

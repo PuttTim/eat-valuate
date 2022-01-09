@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const fileUpload = require('express-fileupload')
 
 require('dotenv').config()
 
@@ -11,8 +12,11 @@ const port = 4000
 
 app.use(express.json())
 app.use(cors())
+app.use(fileUpload())
+
+app.use('/static', express.static('uploads'))
 
 app.use('/api/user', userRouter)
 
 app.listen(port, 'localhost')
-console.log(`API server running on http://localhost:${port}/api`)
+console.log(`eat-valuate server running on http://localhost:${port}`)
