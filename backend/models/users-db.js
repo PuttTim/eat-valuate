@@ -28,7 +28,7 @@ class usersDB {
         )
     }
 
-    findUserCredentials(username, callback) {
+    selectUserCredentials(username, callback) {
         db.query(
             'SELECT username, password FROM users WHERE username = ?',
             username,

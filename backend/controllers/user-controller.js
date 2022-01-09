@@ -77,7 +77,7 @@ async function createUser(request, respond) {
 }
 
 function loginUser(request, respond) {
-    usersDB.findUserCredentials(
+    usersDB.selectUserCredentials(
         request.body.username,
         async (error, results) => {
             // Checks if the username exists in the database, 404 if it does not.
