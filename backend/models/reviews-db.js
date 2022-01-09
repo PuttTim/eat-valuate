@@ -15,6 +15,34 @@ class reviewsDB {
             callback
         )
     }
+
+    selectRestaurantReviews(restaurant_id, callback) {
+        db.query(
+            'SELECT * FROM reviews WHERE restaurant_id = ?',
+            restaurant_id,
+            callback
+        )
+    }
+
+    selectUserReviews(user_id, callback) {
+        db.query('SELECT * FROM reviews WHERE user_id = ?', user_id, callback)
+    }
+
+    selectReview(id, callback) {
+        db.query('SELECT * FROM reviews WHERE id = ?', id, callback)
+    }
+
+    deleteReview(id, callback) {
+        db.query('DELETE FROM reviews WHERE id = ?', id, callback)
+    }
+
+    updateReview(request, callback) {
+        db.query(
+            'UPDATE reviews SET ? WHERE id = ?',
+            [request.body, request.params.id],
+            callback
+        )
+    }
 }
 
 module.exports = reviewsDB

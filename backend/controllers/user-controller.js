@@ -8,9 +8,7 @@ const usersDB = new _usersDB()
 const argonOptions = {}
 
 function getUserById(request, respond) {
-    let id = parseInt(request.params.id)
-    console.log(id)
-    usersDB.selectUser(id, (error, results) => {
+    usersDB.selectUser(parseInt(request.params.id), (error, results) => {
         if (error || results.length === 0) {
             console.log(error)
             respond.status(409).json({ error: 'SQL Error' })

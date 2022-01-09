@@ -13,7 +13,7 @@ function createReview(request, respond) {
         request.body.content,
         request.body.rating,
         request.body.price,
-        `${time.getFullYear()}-${time.getMonth()}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`
+        `${time.getUTCFullYear()}-${time.getUTCMonth()}-${time.getUTCDate()} ${time.getUTCHours()}:${time.getUTCMinutes()}:${time.getUTCSeconds()}`
     )
 
     reviewsDB.insertReview(review, (error, results) => {
@@ -25,4 +25,71 @@ function createReview(request, respond) {
     })
 }
 
-module.exports = { createReview }
+function getRestaurantReview(request, respond) {
+    reviewsDB.selectRestaurantReviews(
+        parseInt(request.params.restaurant_id),
+        (error, results) => {
+            if (error) {
+                console.log(error)
+                respond.status(400).json({ error: 'SQL Error' })
+            }
+            respond.status(200).json(results)
+        }
+    )
+}
+
+function getUserReview(request, respond) {
+    reviewsDB.selectUserReviews(
+        parseInt(request.params.user_id),
+        (error, results) => {
+            if (error) {
+                console.log(error)
+                respond.status(400).json({ error: 'SQL Error' })
+            }
+            respond.status(200).json(results)
+        }
+    )
+}
+
+function getReviewById(request, respond) {
+    reviewsDB.selectReview(parseInt(request.params.id), (error, results) => {
+        if (error) {
+            console.log(error)
+            respond.status(400).json({ error: 'SQL Error' })
+        }
+        respond.status(200).json(results[0])
+    })
+}
+
+function deleteReview(request, respond) {
+    reviewsDB.deleteReview(parseInt(request.params.id), (error, results) => {
+        if (error) {
+            console.log(error)
+            return respond.status(400).json(error)
+        }
+        respond.status(200).json({ message: 'Review deleted' })
+    })
+}
+
+function updateReview(request, respond) {
+    const time = new Date()
+    request.body.posted_at = `${time.getUTCFullYear()}-${time.getUTCMonth()}-${time.getUTCDate()} ${time.getUTCHours()}:${time.getUTCMinutes()}:${time.getUTCSeconds()}`
+    request.body.is_edited = 1
+
+    reviewsDB.updateReview(request, (error, results) => {
+        if (error) {
+            console.log(error)
+            return respond.status(400).json({ error: 'SQL Error' })
+        }
+        respond.status(200).json({ message: 'Review updated' })
+    })
+}
+
+module.exports = {
+    createReview,
+    getRestaurantReview,
+    getUserReview,
+    getReviewById,
+    deleteReview,
+    updateReview
+}
