@@ -16,8 +16,7 @@ function getUserById(request, respond) {
             console.log(error)
             respond.status(404).json({ error: 'User not found' })
         } else {
-            console.log(results)
-            respond.json(results)
+            respond.status(200).json(results[0])
         }
     })
 }

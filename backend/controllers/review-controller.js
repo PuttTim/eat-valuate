@@ -25,7 +25,7 @@ function createReview(request, respond) {
     })
 }
 
-function getRestaurantReview(request, respond) {
+function getRestaurantReviews(request, respond) {
     reviewsDB.selectRestaurantReviews(
         parseInt(request.params.restaurant_id),
         (error, results) => {
@@ -38,7 +38,7 @@ function getRestaurantReview(request, respond) {
     )
 }
 
-function getUserReview(request, respond) {
+function getUserReviews(request, respond) {
     reviewsDB.selectUserReviews(
         parseInt(request.params.user_id),
         (error, results) => {
@@ -87,8 +87,8 @@ function updateReview(request, respond) {
 
 module.exports = {
     createReview,
-    getRestaurantReview,
-    getUserReview,
+    getRestaurantReviews,
+    getUserReviews,
     getReviewById,
     deleteReview,
     updateReview
