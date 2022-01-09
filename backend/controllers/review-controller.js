@@ -19,8 +19,9 @@ function createReview(request, respond) {
     reviewsDB.insertReview(review, (error, results) => {
         if (error) {
             console.log(error)
+            respond.status(400).json({ error: 'SQL Error' })
         }
-        console.log(results)
+        respond.status(202).json({ message: 'Review created' })
     })
 }
 

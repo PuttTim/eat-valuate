@@ -71,8 +71,7 @@ async function createUser(request, respond) {
                 respond.status(400).json({ error: 'SQL Error' })
             }
         } else if (results) {
-            console.log(results)
-            respond.sendStatus(202)
+            respond.status(202).json({ message: 'User created' })
         }
     })
 }
