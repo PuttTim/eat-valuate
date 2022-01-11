@@ -19,14 +19,17 @@ function createBookmark(request, respond) {
 
 // Gets all of the User's bookmarked restaurants
 function getUserBookmarkedRestaurants(request, respond) {
-    bookmarksDB.selectBookmarkedRestaurants(1, (error, results) => {
-        if (error) {
-            console.log(error)
-            respond.status(400).json({ error: 'SQL Error' })
+    bookmarksDB.selectBookmarkedRestaurants(
+        parseInt(request.params.user_id),
+        (error, results) => {
+            if (error) {
+                console.log(error)
+                respond.status(400).json({ error: 'SQL Error' })
+            }
+            console.log(results)
+            respond.status(200).json(results)
         }
-        console.log(results)
-        respond.status(200).json(results)
-    })
+    )
 }
 
 function deleteBookmark(request, respond) {
