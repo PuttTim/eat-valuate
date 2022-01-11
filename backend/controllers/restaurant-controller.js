@@ -4,7 +4,7 @@ const restaurantsDB = new _restaurantsDB()
 
 function getAllRestaurants(request, respond) {
     restaurantsDB.selectAllRestaurants((error, results) => {
-        console.log(results)
+        // console.log(results)
         if (error) {
             console.log(error)
             respond

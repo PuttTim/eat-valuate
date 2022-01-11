@@ -40,15 +40,11 @@ class usersDB {
         db.query('DELETE FROM users WHERE id = ?', id, callback)
     }
 
-    updateUser(request, callback) {
+    updateUser(body, id, callback) {
         // MySQL-nodejs is able to match key and value pairs in the query.
         // In this case, all the keys of request.body is parsed with its value.
         // i.e if request.body has a "zipcode" key, it will change the query to "UPDATE users SET zipcode = request.body.zipcode"
-        db.query(
-            'UPDATE users SET ? WHERE id = ?',
-            [request.body, parseInt(request.params.id)],
-            callback
-        )
+        db.query('UPDATE users SET ? WHERE id = ?', [body, id], callback)
     }
 }
 

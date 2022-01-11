@@ -135,11 +135,16 @@ async function updateUser(request, respond) {
         }
     }
 
+    console.log(request.body)
+
     // Checks if the file is included in the form, if it is, create a file path and download the file to the uploads/users directory.
     if (request.files) {
-        file_name = `/users/${uuidv4()}--${request.files.picture.name}`
+        let file_name = `/users/${uuidv4()}--${request.files.picture.name}`
         const upload_path = `./uploads${file_name}`
-        request.body.profile_picture_path = upload_path
+        request.body.profile_picture_path = file_name
+
+        console.log(request.body)
+
         request.files.picture.mv(upload_path, error => {
             if (error) {
                 console.log(error)
@@ -148,13 +153,17 @@ async function updateUser(request, respond) {
     }
 
     // Request is parsed in whole and usersDB will take out .body and .params.id
-    usersDB.updateUser(request, (error, results) => {
-        if (error) {
-            console.log(error)
-            return respond.status(400).json({ error: 'SQL Error' })
+    usersDB.updateUser(
+        request.body,
+        parseInt(request.params.id),
+        (error, results) => {
+            if (error) {
+                console.log(error)
+                return respond.status(400).json({ error: 'SQL Error' })
+            }
+            respond.status(200).json({ message: 'User updated' })
         }
-        respond.status(200).json({ message: 'User updated' })
-    })
+    )
 }
 
 module.exports = {
