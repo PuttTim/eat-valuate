@@ -6,17 +6,34 @@ import '../index.css'
 const Navbar = () => {
     return (
         <>
-            <AppBar>
+            <AppBar position="static" sx={{}}>
                 <Toolbar>
-                    <Typography
+                    <Button
                         variant="text"
-                        sx={{ fontFamily: 'Montserrat Alternates' }}>
+                        href="/"
+                        disableRipple
+                        sx={{
+                            fontFamily: 'Montserrat Alternates',
+                            fontSize: '25px',
+                            color: '#FFFFFF'
+                        }}>
                         eat-valuate
-                    </Typography>
+                    </Button>
 
-                    <Typography variant="text">Home</Typography>
-
-                    <Typography variant="text">Restaurants</Typography>
+                    <Button
+                        variant="text"
+                        href="/"
+                        disableRipple
+                        sx={{ color: '#FFFFFF' }}>
+                        Home
+                    </Button>
+                    <Button
+                        variant="text"
+                        href="/restaurant"
+                        disableRipple
+                        sx={{ color: '#FFFFFF' }}>
+                        Restaurants
+                    </Button>
                 </Toolbar>
             </AppBar>
         </>
