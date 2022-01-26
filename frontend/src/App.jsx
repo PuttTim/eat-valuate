@@ -9,11 +9,13 @@ import Restaurant from './pages/Restaurant'
 import PageNotFound from './pages/PageNotFound'
 import './index.css'
 
+import CssBaseline from '@mui/material/CssBaseline'
+
 function App() {
     const [count, setCount] = useState(0)
 
     return (
-        <>
+        <CssBaseline>
             <Navbar />
             <Routes>
                 <Route path="/" element={<Home />} />
@@ -23,7 +25,7 @@ function App() {
                 <Route path="/restaurant" element={<Restaurant />} />
                 <Route path="/*" element={<PageNotFound />} />
             </Routes>
-        </>
+        </CssBaseline>
     )
 }
 
