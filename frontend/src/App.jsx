@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
@@ -11,21 +12,33 @@ import './index.css'
 
 import CssBaseline from '@mui/material/CssBaseline'
 
-function App() {
-    const [count, setCount] = useState(0)
+const theme = createTheme({
+    components: {
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    color: '#000000'
+                }
+            }
+        }
+    }
+})
 
+function App() {
     return (
-        <CssBaseline>
-            <Navbar />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/registration" element={<Registration />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/restaurant" element={<Restaurant />} />
-                <Route path="/*" element={<PageNotFound />} />
-            </Routes>
-        </CssBaseline>
+        <ThemeProvider theme={theme}>
+            <CssBaseline>
+                <Navbar />
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/registration" element={<Registration />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/restaurants/*" element={<Restaurant />} />
+                    <Route path="/*" element={<PageNotFound />} />
+                </Routes>
+            </CssBaseline>
+        </ThemeProvider>
     )
 }
 
