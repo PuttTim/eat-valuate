@@ -7,7 +7,7 @@ class User {
         fullname,
         gender,
         zipcode,
-        address,
+        city,
         country,
         mobile_number,
         profile_picture_path
@@ -19,7 +19,7 @@ class User {
         this.fullname = fullname
         this.gender = gender
         this.zipcode = zipcode
-        this.address = address
+        this.city = city
         this.country = country
         this.mobile_number = mobile_number
         this.profile_picture_path = profile_picture_path

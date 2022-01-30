@@ -55,7 +55,7 @@ async function createUser(request, respond) {
         request.body.fullname,
         request.body.gender,
         request.body.zipcode,
-        request.body.address,
+        request.body.city,
         request.body.country,
         request.body.mobile_number,
         '/users/default_profile_picture.png'

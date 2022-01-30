@@ -11,7 +11,7 @@ class usersDB {
 
     insertUser(user, callback) {
         db.query(
-            'INSERT INTO users (username, email, password, fullname, gender, zipcode, address, country, mobile_number, profile_picture_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            'INSERT INTO users (username, email, password, fullname, gender, zipcode, city, country, mobile_number, profile_picture_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
             [
                 user.username,
                 user.email,
@@ -19,7 +19,7 @@ class usersDB {
                 user.fullname,
                 user.gender,
                 user.zipcode,
-                user.address,
+                user.city,
                 user.country,
                 user.mobile_number,
                 user.profile_picture_path
