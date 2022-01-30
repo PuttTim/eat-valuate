@@ -246,7 +246,7 @@ const Navbar = () => {
                             <Tooltip title="Profile">
                                 <IconButton
                                     onClick={() => {
-                                        setAuthenticated(!isAuthenticated)
+                                        navigateTo('profile')
                                     }}
                                     sx={{ p: 0 }}>
                                     <Avatar
@@ -258,7 +258,7 @@ const Navbar = () => {
                         ) : (
                             <Button
                                 onClick={() => {
-                                    setAuthenticated(!isAuthenticated)
+                                    navigateTo('login')
                                 }}>
                                 Login / Register
                             </Button>
