@@ -1,26 +1,21 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
     Grid,
-    Paper,
     Typography,
     TextField,
-    ButtonGroup,
     FormControl,
-    FormLabel,
     FormControlLabel,
     RadioGroup,
     Radio,
-    Checkbox,
-    Button,
     Box,
-    Avatar,
-    Link,
     Container,
-    Stack,
-    Card
+    Card,
+    Button
 } from '@mui/material'
 
 import CountrySelect from './CountrySelect'
+import { useRegisterUserMutation } from '../api/users'
 
 const Registration = () => {
     const [username, setUsername] = useState(undefined)
@@ -37,6 +32,11 @@ const Registration = () => {
 
     const [validatePassword, setValidatePassword] = useState(false)
     const [validateEmail, setValidateEmail] = useState(false)
+    const [validateUsername, setValidateUsername] = useState(false)
+
+    const [registerUser] = useRegisterUserMutation()
+
+    const navigate = useNavigate()
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -51,7 +51,18 @@ const Registration = () => {
             country: country,
             mobile_number: mobile_number
         }
-        console.table(userInformation)
+
+        registerUser(userInformation)
+            .unwrap()
+            .then(response => {
+                console.log(response)
+                navigate('/')
+            })
+            .catch(error => {
+                if (error.status == 409) {
+                    setValidateUsername(true)
+                }
+            })
     }
 
     const handlePasswordConfirm = event => {
@@ -98,7 +109,13 @@ const Registration = () => {
                                 placeholder="User1234"
                                 onChange={event => {
                                     setUsername(event.target.value)
+                                    setValidateUsername(false)
                                 }}
+                                error={validateUsername}
+                                FormHelperTextProps={{ error: true }}
+                                helperText={
+                                    validateUsername ? 'Duplicate Username' : ''
+                                }
                             />
                         </Grid>
                         <Grid item xs={12} md={6}>
@@ -186,7 +203,9 @@ const Registration = () => {
                                 placeholder="9876 5432"
                                 type="tel"
                                 onChange={event => {
-                                    setMobileNumber(event.target.value)
+                                    setMobileNumber(
+                                        event.target.value.replace(/\s/g, '')
+                                    )
                                 }}
                                 helperText=" "
                             />
@@ -197,7 +216,6 @@ const Registration = () => {
                         <Grid item xs={12} sm={4}>
                             <CountrySelect
                                 onChange={value => {
-                                    console.log(value)
                                     setCountry(value.code)
                                 }}
                             />

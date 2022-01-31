@@ -26,8 +26,6 @@ const Navbar = () => {
     const [isAuthenticated, setAuthenticated] = useState(false)
     const [anchorElNav, setAnchorElNav] = useState(null)
 
-    const pages = ['Home', 'Restaurants']
-
     const handleCloseNavMenu = () => {
         setAnchorElNav(null)
     }
