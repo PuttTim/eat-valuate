@@ -12,6 +12,13 @@ const usersApi = api.injectEndpoints({
                 method: 'POST',
                 body: user
             })
+        }),
+        loginUser: builder.mutation({
+            query: credentials => ({
+                url: '/user/login',
+                method: 'POST',
+                body: credentials
+            })
         })
     })
 })
@@ -19,5 +26,6 @@ const usersApi = api.injectEndpoints({
 export const {
     useGetUsersQuery,
     useLazyGetUsersQuery,
-    useRegisterUserMutation
+    useRegisterUserMutation,
+    useLoginUserMutation
 } = usersApi

@@ -2,24 +2,30 @@ import { useEffect } from 'react'
 import { Button } from '@mui/material'
 import { useGetRestaurantsQuery } from '../api/restaurants'
 import { useGetUsersQuery, useLazyGetUsersQuery } from '../api/users'
+import { useSelector, useDispatch } from 'react-redux'
+
+import Toast from '../components/Toast'
+import { createToast } from '../app/slices/snackbar'
 
 const Home = () => {
-    const { data, error, isLoading } = useGetUsersQuery('2')
-    const [getUserById] = useLazyGetUsersQuery()
-    const handleFetch = () => {
-        getUserById(2)
-            .unwrap()
-            .then(response => {
-                console.table(response)
+    const dispatch = useDispatch()
+
+    const handleButton = () => {
+        dispatch(
+            createToast({
+                open: true,
+                message: 'New Snackbar',
+                severity: 'error',
+                anchorOrigin: { vertical: 'top', horizontal: 'left' }
             })
+        )
     }
 
     return (
-        <>
-            <Button variant="contained" onClick={handleFetch}>
-                Fetch User 2
-            </Button>
-        </>
+        <div>
+            <Toast></Toast>
+            <Button onClick={handleButton}>New Snackbar</Button>
+        </div>
     )
 }
 

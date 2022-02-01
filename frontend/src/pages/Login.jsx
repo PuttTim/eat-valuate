@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Box, Button, Grid, Stack, Container } from '@mui/material'
 import Registration from '../components/Registration'
+import SignIn from '../components/SignIn'
 
 const Login = () => {
-    const unsplashUrl = 'https://source.unsplash.com/960x720/?food'
-
     return (
         <Box
             alignItems="center"
@@ -17,7 +16,8 @@ const Login = () => {
                     'url(https://source.unsplash.com/1920x1080/?food)'
             }}>
             <Container component="main" maxWidth="md">
-                <Registration />
+                <SignIn />
+                {/* <Registration /> */}
             </Container>
         </Box>
     )
