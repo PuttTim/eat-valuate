@@ -1,30 +1,31 @@
 import { useEffect } from 'react'
 import { Snackbar, Alert } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
+import { deleteToast } from '../app/slices/toast'
 
 const Toast = () => {
-    const snackProps = useSelector(state => state.toast)
+    const toastProps = useSelector(state => state.toast)
+    const dispatch = useDispatch()
 
-    const handleClose = () => {}
+    const handleClose = () => {
+        dispatch(deleteToast())
+    }
 
     useEffect(() => {
-        console.table(snackProps)
-    }, [snackProps])
+        console.table(toastProps)
+    }, [toastProps])
 
     return (
         <Snackbar
-            anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center'
-            }}
-            open={open}
-            autoHideDuration={6000}
+            open={toastProps.open}
+            anchorOrigin={toastProps.anchorOrigin}
+            autoHideDuration={toastProps.autoHideDuration}
             onClose={handleClose}>
             <Alert
+                severity={toastProps.severity}
                 onClose={handleClose}
-                severity="error"
                 sx={{ width: '100%' }}>
-                Wrong username or password
+                {toastProps.message}
             </Alert>
         </Snackbar>
     )

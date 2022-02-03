@@ -5,28 +5,10 @@ import { useGetUsersQuery, useLazyGetUsersQuery } from '../api/users'
 import { useSelector, useDispatch } from 'react-redux'
 
 import Toast from '../components/Toast'
-import { createToast } from '../app/slices/snackbar'
+import { createToast } from '../app/slices/toast'
 
 const Home = () => {
-    const dispatch = useDispatch()
-
-    const handleButton = () => {
-        dispatch(
-            createToast({
-                open: true,
-                message: 'New Snackbar',
-                severity: 'error',
-                anchorOrigin: { vertical: 'top', horizontal: 'left' }
-            })
-        )
-    }
-
-    return (
-        <div>
-            <Toast></Toast>
-            <Button onClick={handleButton}>New Snackbar</Button>
-        </div>
-    )
+    return <div></div>
 }
 
 export default Home

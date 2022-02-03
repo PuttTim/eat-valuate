@@ -17,7 +17,7 @@ import {
 import CountrySelect from './CountrySelect'
 import { useRegisterUserMutation } from '../api/users'
 
-const Registration = () => {
+const SignUp = () => {
     const [username, setUsername] = useState(undefined)
     const [gender, setGender] = useState(undefined)
     const [firstname, setFirstname] = useState(undefined)
@@ -25,7 +25,6 @@ const Registration = () => {
     const [email, setEmail] = useState(undefined)
     const [mobile_number, setMobileNumber] = useState(undefined)
     const [password, setPassword] = useState(undefined)
-    const [passwordConfirm, setPasswordConfirm] = useState(undefined)
     const [country, setCountry] = useState(undefined)
     const [city, setCity] = useState(undefined)
     const [zipcode, setZipcode] = useState(undefined)
@@ -41,15 +40,15 @@ const Registration = () => {
     const handleSubmit = event => {
         event.preventDefault()
         const userInformation = {
-            username: username,
-            email: email,
-            password: password,
+            username,
+            email,
+            password,
             fullname: `${firstname} ${lastname}`,
-            gender: gender,
-            zipcode: zipcode,
-            city: city,
-            country: country,
-            mobile_number: mobile_number
+            gender,
+            zipcode,
+            city,
+            country,
+            mobile_number
         }
 
         registerUser(userInformation)
@@ -278,7 +277,7 @@ const Registration = () => {
                                 FormHelperTextProps={{ error: true }}
                                 helperText={
                                     validatePassword
-                                        ? 'Pasword does not match'
+                                        ? 'Password does not match'
                                         : ''
                                 }
                             />
@@ -300,4 +299,4 @@ const Registration = () => {
     )
 }
 
-export default Registration
+export default SignUp

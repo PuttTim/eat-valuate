@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Box, Button, Grid, Stack, Container } from '@mui/material'
-import Registration from '../components/Registration'
+import Registration from '../components/SignUp'
 import SignIn from '../components/SignIn'
 
 const Login = () => {

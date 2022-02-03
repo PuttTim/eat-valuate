@@ -19,7 +19,7 @@ function createReview(request, respond) {
     reviewsDB.insertReview(review, (error, results) => {
         if (error) {
             console.log(error)
-            respond.status(400).json({ error: 'SQL Error' })
+            respond.status(400).json({ message: 'SQL Error' })
         }
         respond.status(202).json({ message: 'Review created' })
     })
@@ -31,7 +31,7 @@ function getRestaurantReviews(request, respond) {
         (error, results) => {
             if (error) {
                 console.log(error)
-                respond.status(400).json({ error: 'SQL Error' })
+                respond.status(400).json({ message: 'SQL Error' })
             }
             respond.status(200).json(results)
         }
@@ -44,7 +44,7 @@ function getUserReviews(request, respond) {
         (error, results) => {
             if (error) {
                 console.log(error)
-                respond.status(400).json({ error: 'SQL Error' })
+                respond.status(400).json({ message: 'SQL Error' })
             }
             respond.status(200).json(results)
         }
@@ -55,7 +55,7 @@ function getReviewById(request, respond) {
     reviewsDB.selectReview(parseInt(request.params.id), (error, results) => {
         if (error) {
             console.log(error)
-            respond.status(400).json({ error: 'SQL Error' })
+            respond.status(400).json({ message: 'SQL Error' })
         }
         respond.status(200).json(results[0])
     })
@@ -79,7 +79,7 @@ function updateReview(request, respond) {
     reviewsDB.updateReview(request, (error, results) => {
         if (error) {
             console.log(error)
-            return respond.status(400).json({ error: 'SQL Error' })
+            return respond.status(400).json({ message: 'SQL Error' })
         }
         respond.status(200).json({ message: 'Review updated' })
     })

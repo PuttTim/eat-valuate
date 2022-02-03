@@ -20,11 +20,15 @@ import { useNavigate } from 'react-router-dom'
 import { spacing } from '@mui/system'
 import '../index.css'
 
+import { useSelector, useDispatch } from 'react-redux'
+
 const Navbar = () => {
     const navigate = useNavigate()
     const [anchorEl, setAnchorEl] = useState(null)
-    const [isAuthenticated, setAuthenticated] = useState(false)
     const [anchorElNav, setAnchorElNav] = useState(null)
+    const [showPassword, setShowPassword] = useState(false)
+
+    const isAuthenticated = useSelector(state => state.auth)
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null)
@@ -45,8 +49,6 @@ const Navbar = () => {
     async function navigateTo(destination) {
         navigate(`/${destination}`)
     }
-
-    useEffect(() => console.log(isAuthenticated), [isAuthenticated])
 
     return (
         <AppBar position="static" sx={{ backgroundColor: '#ffffff' }}>
@@ -120,11 +122,7 @@ const Navbar = () => {
 
                         {isAuthenticated ? (
                             <Tooltip title="Profile">
-                                <IconButton
-                                    onClick={() => {
-                                        setAuthenticated(!isAuthenticated)
-                                    }}
-                                    sx={{ p: 0 }}>
+                                <IconButton sx={{ p: 0 }}>
                                     <Avatar
                                         alt="Remy Sharp"
                                         src="/static/images/avatar/2.jpg"
@@ -132,12 +130,7 @@ const Navbar = () => {
                                 </IconButton>
                             </Tooltip>
                         ) : (
-                            <Button
-                                onClick={() => {
-                                    setAuthenticated(!isAuthenticated)
-                                }}>
-                                Login
-                            </Button>
+                            <Button>Login</Button>
                         )}
                     </Box>
 

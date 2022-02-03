@@ -14,10 +14,10 @@ function getUserById(request, respond) {
     usersDB.selectUser(parseInt(request.params.id), (error, results) => {
         if (error || results.length === 0) {
             console.log(error)
-            respond.status(409).json({ error: 'SQL Error' })
+            respond.status(409).json({ message: 'SQL Error' })
         } else if (results[0].username == null) {
             console.log(error)
-            respond.status(404).json({ error: 'User not found' })
+            respond.status(404).json({ message: 'User not found' })
         } else {
             respond.status(200).json(results[0])
         }
@@ -66,9 +66,9 @@ async function createUser(request, respond) {
         if (error) {
             console.log(error)
             if (error.errno === 1062) {
-                respond.status(409).json({ error: 'Duplicate username' })
+                respond.status(409).json({ message: 'Duplicate username' })
             } else {
-                respond.status(400).json({ error: 'SQL Error' })
+                respond.status(400).json({ message: 'SQL Error' })
             }
         } else if (results) {
             respond.status(202).json({ message: 'User created' })
@@ -82,7 +82,7 @@ function loginUser(request, respond) {
         async (error, results) => {
             // Checks if the username exists in the database, 404 if it does not.
             if (error || results.length == 0) {
-                respond.status(404).json({ error: 'User not found' })
+                respond.status(404).json({ message: 'User not found' })
             }
             // If the user exists then verifies the password
             else {
@@ -159,7 +159,7 @@ async function updateUser(request, respond) {
         (error, results) => {
             if (error) {
                 console.log(error)
-                return respond.status(400).json({ error: 'SQL Error' })
+                return respond.status(400).json({ message: 'SQL Error' })
             }
             respond.status(200).json({ message: 'User updated' })
         }

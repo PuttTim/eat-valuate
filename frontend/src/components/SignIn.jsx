@@ -3,43 +3,50 @@ import {
     Grid,
     Typography,
     TextField,
-    FormControl,
-    FormControlLabel,
-    RadioGroup,
-    Radio,
     Box,
     Container,
     Card,
-    Button,
-    Snackbar,
-    Alert
+    Button
 } from '@mui/material'
 
 import { useLoginUserMutation } from '../api/users'
+import { createToast } from '../app/slices/toast'
+import { authenticateUser } from '../app/slices/auth'
+import { useDispatch } from 'react-redux'
 
 const SignIn = () => {
     const [username, setUsername] = useState(undefined)
     const [password, setPassword] = useState(undefined)
 
-    const [errorPassword, setErrorPassword] = useState(false)
-    const [errorUsername, setErrorUsername] = useState(false)
-
     const [loginUser] = useLoginUserMutation()
+    const dispatch = useDispatch()
 
     const handleSubmit = event => {
         event.preventDefault()
-        loginUser({ username: username, password: password })
+        loginUser({ username, password })
             .unwrap()
             .then(response => {
-                setErrorPassword(false)
-                setErrorUsername(false)
+                console.table(response)
+                dispatch(authenticateUser())
+                dispatch(
+                    createToast({
+                        open: true,
+                        message: `${response.message}!`,
+                        severity: 'success',
+                        anchorOrigin: { vertical: 'top', horizontal: 'center' }
+                    })
+                )
             })
             .catch(error => {
-                switch (error.status) {
-                    case 403:
-                        setErrorPassword(true)
-                    case 404:
-                        setErrorUsername(true)
+                if (error) {
+                    console.table(error)
+                    dispatch(
+                        createToast({
+                            open: true,
+                            message: error.data.message,
+                            severity: 'error'
+                        })
+                    )
                 }
             })
     }
@@ -48,12 +55,10 @@ const SignIn = () => {
 
     const handleUsername = event => {
         setUsername(event.target.value)
-        setErrorUsername(false)
     }
 
     const handlePassword = event => {
         setPassword(event.target.value)
-        setErrorPassword(false)
     }
 
     return (

@@ -1,13 +1,17 @@
 import { useState } from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { Routes, Route } from 'react-router-dom'
+
+import Toast from './components/Toast'
 import Navbar from './components/Navbar'
+
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Registration from './pages/Registration'
 import Profile from './pages/Profile'
 import Restaurant from './pages/Restaurant'
 import PageNotFound from './pages/PageNotFound'
+
 import './index.css'
 
 import CssBaseline from '@mui/material/CssBaseline'
@@ -28,6 +32,7 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline>
+                <Toast />
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<Home />} />
