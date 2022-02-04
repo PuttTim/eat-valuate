@@ -1,9 +1,23 @@
 import { useState, useEffect } from 'react'
-import { Box, Button, Grid, Stack, Container } from '@mui/material'
-import Registration from '../components/SignUp'
+import {
+    Box,
+    Container,
+    ToggleButton,
+    ToggleButtonGroup,
+    Typography,
+    Card
+} from '@mui/material'
+
+import SignUp from '../components/SignUp'
 import SignIn from '../components/SignIn'
 
 const Login = () => {
+    const [tab, setTab] = useState('')
+
+    const handleChange = (event, newAlignment) => {
+        tab === '' ? setTab('register') : setTab(newAlignment)
+    }
+
     return (
         <Box
             alignItems="center"
@@ -15,9 +29,23 @@ const Login = () => {
                 backgroundImage:
                     'url(https://source.unsplash.com/1920x1080/?food)'
             }}>
-            <Container component="main" maxWidth="md">
-                <SignIn />
-                {/* <Registration /> */}
+            <Container maxWidth="md" static>
+                <Card>
+                    <ToggleButtonGroup
+                        exclusive
+                        fullWidth
+                        value={tab}
+                        onChange={handleChange}>
+                        <ToggleButton disableRipple value="login">
+                            <Typography>Sign In</Typography>
+                        </ToggleButton>
+                        <ToggleButton disableRipple value="register">
+                            <Typography>Register</Typography>
+                        </ToggleButton>
+                    </ToggleButtonGroup>
+                </Card>
+
+                {tab === 'register' ? <SignUp /> : <SignIn />}
             </Container>
         </Box>
     )

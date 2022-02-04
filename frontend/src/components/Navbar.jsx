@@ -26,7 +26,6 @@ const Navbar = () => {
     const navigate = useNavigate()
     const [anchorEl, setAnchorEl] = useState(null)
     const [anchorElNav, setAnchorElNav] = useState(null)
-    const [showPassword, setShowPassword] = useState(false)
 
     const isAuthenticated = useSelector(state => state.auth)
 
@@ -120,7 +119,7 @@ const Navbar = () => {
                             </Menu>
                         </Box>
 
-                        {isAuthenticated ? (
+                        {isAuthenticated.authenticated ? (
                             <Tooltip title="Profile">
                                 <IconButton sx={{ p: 0 }}>
                                     <Avatar
@@ -233,7 +232,7 @@ const Navbar = () => {
                             </Stack>
                         </Box>
 
-                        {isAuthenticated ? (
+                        {isAuthenticated.authenticated ? (
                             <Tooltip title="Profile">
                                 <IconButton
                                     onClick={() => {
@@ -241,7 +240,7 @@ const Navbar = () => {
                                     }}
                                     sx={{ p: 0 }}>
                                     <Avatar
-                                        alt="Remy Sharp"
+                                        alt="Profile Picture"
                                         src="/static/images/avatar/2.jpg"
                                     />
                                 </IconButton>
