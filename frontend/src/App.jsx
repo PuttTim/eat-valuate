@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { Routes, Route } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import CssBaseline from '@mui/material/CssBaseline'
 
 import Toast from './components/Toast'
 import Navbar from './components/Navbar'
@@ -14,7 +16,7 @@ import PageNotFound from './pages/PageNotFound'
 
 import './index.css'
 
-import CssBaseline from '@mui/material/CssBaseline'
+import { authenticateUser } from './app/slices/auth'
 
 const theme = createTheme({
     components: {
@@ -29,6 +31,21 @@ const theme = createTheme({
 })
 
 function App() {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        const userData = JSON.parse(localStorage.getItem('userData'))
+        if (userData) {
+            console.table(JSON.parse(localStorage.getItem('userData')))
+            dispatch(
+                authenticateUser({
+                    authenticated: true,
+                    userData: JSON.parse(localStorage.getItem('userData'))
+                })
+            )
+        }
+    }, [])
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline>

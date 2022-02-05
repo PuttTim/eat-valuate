@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import {
     AppBar,
     Container,
-    Typography,
     Toolbar,
     Button,
     Stack,
@@ -11,23 +10,26 @@ import {
     Box,
     IconButton,
     Tooltip,
-    Avatar
+    Typography
 } from '@mui/material'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useNavigate } from 'react-router-dom'
-import { spacing } from '@mui/system'
 import '../index.css'
 
 import { useSelector, useDispatch } from 'react-redux'
+import { unauthenticateUser } from '../app/slices/auth'
 
 const Navbar = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
     const [anchorEl, setAnchorEl] = useState(null)
     const [anchorElNav, setAnchorElNav] = useState(null)
+    const [anchorElUser, setAnchorElUser] = useState(null)
 
-    const isAuthenticated = useSelector(state => state.auth)
+    const userAuthentication = useSelector(state => state.auth)
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null)
@@ -35,6 +37,14 @@ const Navbar = () => {
 
     const handleOpenNavMenu = event => {
         setAnchorElNav(event.currentTarget)
+    }
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null)
+    }
+
+    const handleOpenUserMenu = event => {
+        setAnchorElUser(event.currentTarget)
     }
 
     const handleMouseOver = event => {
@@ -45,9 +55,22 @@ const Navbar = () => {
         setAnchorEl(null)
     }
 
+    const handleLogout = () => {
+        dispatch(unauthenticateUser())
+        localStorage.removeItem('userData')
+        setAnchorElUser(null)
+    }
+
     async function navigateTo(destination) {
         navigate(`/${destination}`)
     }
+
+    useEffect(() => {
+        console.table(userAuthentication)
+        if (userAuthentication.auth) {
+            setAnchorElUser(null)
+        }
+    }, [userAuthentication])
 
     return (
         <AppBar position="static" sx={{ backgroundColor: '#ffffff' }}>
@@ -119,17 +142,58 @@ const Navbar = () => {
                             </Menu>
                         </Box>
 
-                        {isAuthenticated.authenticated ? (
-                            <Tooltip title="Profile">
-                                <IconButton sx={{ p: 0 }}>
-                                    <Avatar
-                                        alt="Remy Sharp"
-                                        src="/static/images/avatar/2.jpg"
-                                    />
-                                </IconButton>
-                            </Tooltip>
+                        {userAuthentication.authenticated ? (
+                            <Box
+                                sx={{
+                                    flexGrow: 0,
+                                    xs: 'flex',
+                                    md: 'none'
+                                }}>
+                                <Tooltip title="User Profile">
+                                    <Button
+                                        disableRipple
+                                        onClick={handleOpenUserMenu}
+                                        sx={{ p: 0 }}>
+                                        {userAuthentication.userData.username}
+                                    </Button>
+                                </Tooltip>
+                                <Menu
+                                    sx={{ mt: '45px' }}
+                                    id="menu-appbar"
+                                    anchorEl={anchorElUser}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right'
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right'
+                                    }}
+                                    open={Boolean(anchorElUser)}
+                                    onClose={handleCloseUserMenu}>
+                                    <MenuItem>
+                                        <Button
+                                            onClick={() => {
+                                                navigateTo('profile')
+                                            }}>
+                                            Profile
+                                        </Button>
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <Button onClick={handleLogout}>
+                                            Logout
+                                        </Button>
+                                    </MenuItem>
+                                </Menu>
+                            </Box>
                         ) : (
-                            <Button>Login</Button>
+                            <Button
+                                onClick={() => {
+                                    navigateTo('login')
+                                }}>
+                                Login
+                            </Button>
                         )}
                     </Box>
 
@@ -232,19 +296,22 @@ const Navbar = () => {
                             </Stack>
                         </Box>
 
-                        {isAuthenticated.authenticated ? (
-                            <Tooltip title="Profile">
-                                <IconButton
-                                    onClick={() => {
-                                        navigateTo('profile')
-                                    }}
-                                    sx={{ p: 0 }}>
-                                    <Avatar
-                                        alt="Profile Picture"
-                                        src="/static/images/avatar/2.jpg"
-                                    />
-                                </IconButton>
-                            </Tooltip>
+                        {userAuthentication.authenticated ? (
+                            <Box
+                                sx={{
+                                    flexGrow: 0,
+                                    display: { xs: 'none', md: 'flex' }
+                                }}>
+                                <Tooltip title="User Profile">
+                                    <Button
+                                        onClick={() => {
+                                            navigateTo('profile')
+                                        }}>
+                                        {userAuthentication.userData.username}
+                                    </Button>
+                                </Tooltip>
+                                <Button onClick={handleLogout}> Logout</Button>
+                            </Box>
                         ) : (
                             <Button
                                 onClick={() => {

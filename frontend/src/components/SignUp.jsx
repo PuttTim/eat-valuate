@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import {
     Grid,
     Typography,
@@ -9,15 +10,20 @@ import {
     RadioGroup,
     Radio,
     Box,
-    Container,
     Card,
-    Button
+    Button,
+    InputAdornment,
+    IconButton,
+    OutlinedInput
 } from '@mui/material'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
 import CountrySelect from './CountrySelect'
 import { useRegisterUserMutation } from '../api/users'
+import { createToast } from '../app/slices/toast'
 
-const SignUp = () => {
+const SignUp = props => {
     const [username, setUsername] = useState(undefined)
     const [gender, setGender] = useState(undefined)
     const [firstname, setFirstname] = useState(undefined)
@@ -31,11 +37,17 @@ const SignUp = () => {
 
     const [validatePassword, setValidatePassword] = useState(false)
     const [validateEmail, setValidateEmail] = useState(false)
-    const [validateUsername, setValidateUsername] = useState(false)
+    const [disableSubmit, setDisableSubmit] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
+
+    const [validateUsername, setValidateUsername] = useState('')
+    const [validateMobileNumber, setValidateMobileNumber] = useState('')
+    const [validateZipcode, setValidateZipcode] = useState('')
 
     const [registerUser] = useRegisterUserMutation()
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -55,11 +67,25 @@ const SignUp = () => {
             .unwrap()
             .then(response => {
                 console.log(response)
-                navigate('/')
+                dispatch(
+                    createToast({
+                        open: true,
+                        anchorOrigin: {
+                            vertical: 'top',
+                            horizontal: 'center'
+                        },
+                        severity: 'success',
+                        message: 'Redirecting back to Login page..',
+                        title: `Successfully registered ${username}!`
+                    })
+                )
+                setTimeout(() => {
+                    props.onSuccess('login')
+                }, 1000)
             })
             .catch(error => {
                 if (error.status == 409) {
-                    setValidateUsername(true)
+                    setValidateUsername('Duplicate Username')
                 }
             })
     }
@@ -67,8 +93,10 @@ const SignUp = () => {
     const handlePasswordConfirm = event => {
         if (password != event.target.value) {
             setValidatePassword(true)
+            setDisableSubmit(true)
         } else {
             setValidatePassword(false)
+            setDisableSubmit(false)
         }
     }
 
@@ -83,6 +111,14 @@ const SignUp = () => {
         } else {
             setValidateEmail(true)
         }
+    }
+
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword)
+    }
+
+    const handleMouseDownPassword = event => {
+        event.preventDefault()
     }
 
     return (
@@ -107,12 +143,16 @@ const SignUp = () => {
                             placeholder="User1234"
                             onChange={event => {
                                 setUsername(event.target.value)
-                                setValidateUsername(false)
+                                event.target.value.length > 32
+                                    ? setValidateUsername(
+                                          'Maximum 32 characters'
+                                      )
+                                    : setValidateUsername('')
                             }}
-                            error={validateUsername}
+                            error={Boolean(validateUsername)}
                             FormHelperTextProps={{ error: true }}
                             helperText={
-                                validateUsername ? 'Duplicate Username' : ''
+                                validateUsername ? validateUsername : ''
                             }
                         />
                     </Grid>
@@ -198,14 +238,22 @@ const SignUp = () => {
                             fullWidth
                             id="mobile_number"
                             name="mobile number"
-                            placeholder="9876 5432"
+                            placeholder="98765432"
                             type="tel"
                             onChange={event => {
                                 setMobileNumber(
                                     event.target.value.replace(/\s/g, '')
                                 )
+                                event.target.value.length > 20
+                                    ? setValidateMobileNumber(
+                                          'Maximum 20 characters'
+                                      )
+                                    : setValidateMobileNumber('')
                             }}
-                            helperText=" "
+                            FormHelperTextProps={{ error: true }}
+                            helperText={
+                                validateMobileNumber ? validateMobileNumber : ''
+                            }
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -240,8 +288,14 @@ const SignUp = () => {
                             placeholder="Zip Code"
                             onChange={event => {
                                 setZipcode(event.target.value)
+                                event.target.value.length > 10
+                                    ? setValidateZipcode(
+                                          'Maximum 10 characters'
+                                      )
+                                    : setValidateZipcode('')
                             }}
-                            helperText=" "
+                            FormHelperTextProps={{ error: true }}
+                            helperText={validateZipcode ? validateZipcode : ''}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -255,11 +309,30 @@ const SignUp = () => {
                             name="password"
                             placeholder="Password"
                             autoComplete="new-password"
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
                             onChange={event => {
                                 setPassword(event.target.value)
                             }}
                             helperText=" "
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={
+                                                handleMouseDownPassword
+                                            }
+                                            edge="end">
+                                            {showPassword ? (
+                                                <VisibilityOff />
+                                            ) : (
+                                                <Visibility />
+                                            )}
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -270,7 +343,7 @@ const SignUp = () => {
                             name="passwordConfirm"
                             placeholder="Confirm Password"
                             autoComplete="new-password"
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
                             onChange={handlePasswordConfirm}
                             error={validatePassword}
                             FormHelperTextProps={{ error: true }}
@@ -279,11 +352,31 @@ const SignUp = () => {
                                     ? 'Password does not match'
                                     : ''
                             }
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={
+                                                handleMouseDownPassword
+                                            }
+                                            edge="end">
+                                            {showPassword ? (
+                                                <VisibilityOff />
+                                            ) : (
+                                                <Visibility />
+                                            )}
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }}
                         />
                     </Grid>
                     <Grid item xs={12}>
                         <Button
                             type="submit"
+                            disabled={disableSubmit}
                             fullWidth
                             color="primary"
                             variant="contained"

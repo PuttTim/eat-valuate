@@ -2,7 +2,7 @@ import api from './api'
 
 const usersApi = api.injectEndpoints({
     endpoints: builder => ({
-        getUsers: builder.query({
+        getUserById: builder.query({
             query: id => ({ url: `/user/${id}` }),
             method: 'GET'
         }),
@@ -24,8 +24,7 @@ const usersApi = api.injectEndpoints({
 })
 
 export const {
-    useGetUsersQuery,
-    useLazyGetUsersQuery,
+    useLazyGetUserByIdQuery,
     useRegisterUserMutation,
     useLoginUserMutation
 } = usersApi

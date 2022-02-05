@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Snackbar, Alert } from '@mui/material'
+import { Snackbar, Alert, AlertTitle } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import { deleteToast } from '../app/slices/toast'
 
@@ -11,10 +11,6 @@ const Toast = () => {
         dispatch(deleteToast())
     }
 
-    useEffect(() => {
-        console.table(toastProps)
-    }, [toastProps])
-
     return (
         <Snackbar
             open={toastProps.open}
@@ -25,6 +21,7 @@ const Toast = () => {
                 severity={toastProps.severity}
                 onClose={handleClose}
                 sx={{ width: '100%' }}>
+                <AlertTitle>{toastProps.title}</AlertTitle>
                 {toastProps.message}
             </Alert>
         </Snackbar>

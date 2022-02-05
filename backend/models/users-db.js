@@ -3,7 +3,7 @@ const db = require('../db')
 class usersDB {
     selectUser(id, callback) {
         db.query(
-            'SELECT users.username, users.fullname, users.country, users.profile_picture_path, AVG(reviews.rating) AS avg_rating FROM users LEFT JOIN reviews ON users.id = reviews.user_id WHERE users.id = ?',
+            'SELECT users.id, users.username, users.fullname, users.country, users.profile_picture_path, AVG(reviews.rating) AS avg_rating FROM users LEFT JOIN reviews ON users.id = reviews.user_id WHERE users.id = ?',
             id,
             callback
         )
@@ -30,7 +30,7 @@ class usersDB {
 
     selectUserCredentials(username, callback) {
         db.query(
-            'SELECT username, password FROM users WHERE username = ?',
+            'SELECT id, username, password FROM users WHERE username = ?',
             username,
             callback
         )

@@ -96,7 +96,8 @@ function loginUser(request, respond) {
                     ) {
                         // If the password matches, respond with a 200 and welcome the user
                         respond.status(200).json({
-                            message: `Welcome ${request.body.username}`
+                            message: `Welcome ${results[0].username}`,
+                            id: results[0].id
                         })
                     } else {
                         // If the password does not match, respond with a 403

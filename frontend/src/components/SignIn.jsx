@@ -6,12 +6,17 @@ import {
     Box,
     Container,
     Card,
-    Button
+    Button,
+    InputAdornment,
+    IconButton,
+    OutlinedInput
 } from '@mui/material'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import { useLoginUserMutation } from '../api/users'
+import { useLoginUserMutation, useLazyGetUserByIdQuery } from '../api/users'
 import { createToast } from '../app/slices/toast'
 import { authenticateUser } from '../app/slices/auth'
 
@@ -20,9 +25,11 @@ const SignIn = () => {
     const dispatch = useDispatch()
 
     const [loginUser] = useLoginUserMutation()
+    const [getUser] = useLazyGetUserByIdQuery()
 
     const [username, setUsername] = useState(undefined)
     const [password, setPassword] = useState(undefined)
+    const [showPassword, setShowPassword] = useState(false)
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -30,15 +37,34 @@ const SignIn = () => {
             .unwrap()
             .then(response => {
                 console.table(response)
-                dispatch(authenticateUser())
-                dispatch(
-                    createToast({
-                        open: true,
-                        message: `${response.message}!`,
-                        severity: 'success',
-                        anchorOrigin: { vertical: 'top', horizontal: 'center' }
+                getUser(response.id)
+                    .unwrap()
+                    .then(response => {
+                        console.table(response)
+                        dispatch(
+                            authenticateUser({
+                                authenticated: true,
+                                userData: response
+                            })
+                        )
+                        localStorage.setItem(
+                            'userData',
+                            JSON.stringify(response)
+                        )
+                        dispatch(
+                            createToast({
+                                open: true,
+                                anchorOrigin: {
+                                    vertical: 'top',
+                                    horizontal: 'center'
+                                },
+                                severity: 'success',
+                                message: 'Redirecting back to Home page..',
+                                title: `Welcome ${response.username}!`
+                            })
+                        )
                     })
-                )
+
                 setTimeout(() => {
                     navigate('/')
                 }, 1000)
@@ -57,7 +83,13 @@ const SignIn = () => {
             })
     }
 
-    const handleClose = () => {}
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword)
+    }
+
+    const handleMouseDownPassword = event => {
+        event.preventDefault()
+    }
 
     const handleUsername = event => {
         setUsername(event.target.value)
@@ -95,11 +127,30 @@ const SignIn = () => {
                         <TextField
                             required={true}
                             fullWidth
-                            id="username"
-                            name="username"
-                            placeholder="User1234"
+                            id="password"
+                            name="password"
+                            placeholder="Password"
                             onChange={handlePassword}
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={
+                                                handleMouseDownPassword
+                                            }
+                                            edge="end">
+                                            {showPassword ? (
+                                                <VisibilityOff />
+                                            ) : (
+                                                <Visibility />
+                                            )}
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }}
                         />
                     </Grid>
                     <Grid item xs={12}>

@@ -5,7 +5,8 @@ const initialState = {
     anchorOrigin: { vertical: 'bottom', horizontal: 'center' },
     autoHideDuration: 2500,
     severity: 'info',
-    message: ''
+    message: '',
+    title: ''
 }
 
 export const toastSlice = createSlice({
@@ -20,9 +21,14 @@ export const toastSlice = createSlice({
                 action.payload.autoHideDuration ?? initialState.autoHideDuration
             state.severity = action.payload.severity ?? initialState.severity
             state.message = action.payload.message ?? initialState.message
+            state.title = action.payload.title ?? initialState.title
         },
         deleteToast: state => {
             state.open = false
+            state.anchorOrigin = { vertical: 'bottom', horizontal: 'center' }
+            state.severity = 'info'
+            state.message = ''
+            state.title = ''
         }
     }
 })

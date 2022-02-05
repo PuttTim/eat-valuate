@@ -1,7 +1,5 @@
 import { useEffect } from 'react'
 import { Button } from '@mui/material'
-import { useGetRestaurantsQuery } from '../api/restaurants'
-import { useGetUsersQuery, useLazyGetUsersQuery } from '../api/users'
 import { useSelector, useDispatch } from 'react-redux'
 
 import Toast from '../components/Toast'

@@ -12,10 +12,16 @@ import SignUp from '../components/SignUp'
 import SignIn from '../components/SignIn'
 
 const Login = () => {
-    const [tab, setTab] = useState('')
+    const [tab, setTab] = useState('login')
 
-    const handleChange = (event, newAlignment) => {
-        tab === '' ? setTab('register') : setTab(newAlignment)
+    const handleChange = (event, newValue) => {
+        if (tab === '') {
+            setTab('register')
+        } else {
+            if (newValue !== null) {
+                setTab(newValue)
+            }
+        }
     }
 
     return (
@@ -29,7 +35,7 @@ const Login = () => {
                 backgroundImage:
                     'url(https://source.unsplash.com/1920x1080/?food)'
             }}>
-            <Container maxWidth="md" static>
+            <Container maxWidth="md">
                 <Card>
                     <ToggleButtonGroup
                         exclusive
@@ -44,8 +50,11 @@ const Login = () => {
                         </ToggleButton>
                     </ToggleButtonGroup>
                 </Card>
-
-                {tab === 'register' ? <SignUp /> : <SignIn />}
+                {tab === 'register' ? (
+                    <SignUp onSuccess={newTab => setTab(newTab)} />
+                ) : (
+                    <SignIn />
+                )}
             </Container>
         </Box>
     )
