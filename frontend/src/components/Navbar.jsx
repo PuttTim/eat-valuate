@@ -61,8 +61,10 @@ const Navbar = () => {
         setAnchorElUser(null)
     }
 
-    async function navigateTo(destination) {
-        navigate(`/${destination}`)
+    function navigateTo(destination) {
+        setTimeout(() => {
+            navigate(`/${destination}`)
+        }, 15)
     }
 
     useEffect(() => {

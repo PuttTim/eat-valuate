@@ -11,6 +11,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Registration from './pages/Registration'
 import Profile from './pages/Profile'
+import Restaurants from './pages/Restaurants'
 import Restaurant from './pages/Restaurant'
 import PageNotFound from './pages/PageNotFound'
 
@@ -56,7 +57,8 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/registration" element={<Registration />} />
                     <Route path="/profile" element={<Profile />} />
-                    <Route path="/restaurants/*" element={<Restaurant />} />
+                    <Route path="/restaurants/*" element={<Restaurants />} />
+                    <Route path="/restaurant/*" element={<Restaurant />} />
                     <Route path="/*" element={<PageNotFound />} />
                 </Routes>
             </CssBaseline>

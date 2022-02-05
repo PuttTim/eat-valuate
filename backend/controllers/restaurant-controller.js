@@ -46,7 +46,9 @@ function getAllRestaurants(request, respond) {
                 days,
                 opening,
                 closing,
-                category: restaurant.category
+                category: restaurant.category.split(',').join(' • '),
+                avg_rating: restaurant.avg_rating,
+                review_count: restaurant.review_count
             })
         })
         respond.json(restaurantsList)
