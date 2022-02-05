@@ -1,11 +1,9 @@
 import React from 'react'
 
+import RestaurantCard from '../components/RestaurantCard'
+
 const Restaurant = () => {
-    return (
-        <div>
-            <h1>Restaurant</h1>
-        </div>
-    )
+    return <RestaurantCard></RestaurantCard>
 }
 
 export default Restaurant

@@ -4,50 +4,52 @@ const restaurantsDB = new _restaurantsDB()
 
 function getAllRestaurants(request, respond) {
     restaurantsDB.selectAllRestaurants((error, results) => {
-        // console.log(results)
+        const restaurantsList = []
+
         if (error) {
             console.log(error)
             respond
                 .status(400)
                 .json({ error: 'This in practice, should never be executed' })
         }
-
-        const photos = results[1].map(element => {
-            return element.path
-        })
-
-        const contact = {
-            website: results[2].map(element => {
-                return element.website
-            }),
-            mobile_number: results[2].map(element => {
-                return element.mobile_number
-            }),
-            email: results[2].map(element => {
-                return element.email
+        results.map(restaurant => {
+            const closing = restaurant.closing.split(',').slice(0, 7)
+            const opening = restaurant.opening.split(',').slice(0, 7)
+            const days = restaurant.days.split(',').slice(0, 7)
+            const website = []
+            restaurant.website.split(',').map(site => {
+                if (site != 'None') {
+                    website.push(site)
+                }
             })
-        }
-
-        const opening = {
-            days: results[3].map(element => {
-                return element.day
-            }),
-            hours: results[3].map(element => {
-                return `${element.opening} - ${element.closing}`
+            const email = []
+            restaurant.email.split(',').map(address => {
+                if (address != 'None') {
+                    email.push(address)
+                }
             })
-        }
-
-        const categories = results[4].map(element => {
-            return element.category_id
+            const mobile_number = []
+            restaurant.mobile_number.split(',').map(number => {
+                if (number != 'None') {
+                    mobile_number.push(number)
+                }
+            })
+            restaurantsList.push({
+                id: restaurant.id,
+                name: restaurant.name,
+                location: restaurant.location,
+                pricing: restaurant.pricing,
+                photo: restaurant.photo,
+                website: website,
+                email: email,
+                mobile_number: mobile_number,
+                days,
+                opening,
+                closing,
+                category: restaurant.category
+            })
         })
-
-        respond.json({
-            restaurant: results[0],
-            photos: photos,
-            contact: contact,
-            opening: opening,
-            categories: categories
-        })
+        respond.json(restaurantsList)
     })
 }
 
