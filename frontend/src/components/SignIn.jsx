@@ -4,12 +4,14 @@ import {
     Typography,
     TextField,
     Box,
-    Container,
     Card,
     Button,
     InputAdornment,
     IconButton,
-    OutlinedInput
+    FormGroup,
+    Switch,
+    FormControl,
+    FormControlLabel
 } from '@mui/material'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
@@ -27,9 +29,11 @@ const SignIn = () => {
     const [loginUser] = useLoginUserMutation()
     const [getUser] = useLazyGetUserByIdQuery()
 
-    const [username, setUsername] = useState(undefined)
-    const [password, setPassword] = useState(undefined)
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
     const [showPassword, setShowPassword] = useState(false)
+    const [rememberUser, setRememberUser] = useState(false)
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -47,10 +51,7 @@ const SignIn = () => {
                                 userData: response
                             })
                         )
-                        localStorage.setItem(
-                            'userData',
-                            JSON.stringify(response)
-                        )
+
                         dispatch(
                             createToast({
                                 open: true,
@@ -63,6 +64,12 @@ const SignIn = () => {
                                 title: `Welcome ${response.username}!`
                             })
                         )
+                        if (rememberUser) {
+                            localStorage.setItem(
+                                'userData',
+                                JSON.stringify(response)
+                            )
+                        }
                     })
 
                 setTimeout(() => {
@@ -152,6 +159,21 @@ const SignIn = () => {
                                 )
                             }}
                         />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <FormGroup>
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        checked={rememberUser}
+                                        onChange={() => {
+                                            setRememberUser(!rememberUser)
+                                        }}
+                                    />
+                                }
+                                label="Remember User?"
+                            />
+                        </FormGroup>
                     </Grid>
                     <Grid item xs={12}>
                         <Button

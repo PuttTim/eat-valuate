@@ -13,8 +13,7 @@ import {
     Card,
     Button,
     InputAdornment,
-    IconButton,
-    OutlinedInput
+    IconButton
 } from '@mui/material'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
@@ -46,7 +45,6 @@ const SignUp = props => {
 
     const [registerUser] = useRegisterUserMutation()
 
-    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const handleSubmit = event => {
