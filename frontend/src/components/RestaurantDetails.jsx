@@ -1,18 +1,14 @@
 import { useState, useEffect } from 'react'
 import {
     Container,
-    Paper,
     Button,
-    Box,
-    Card,
     Typography,
     Grid,
     Rating,
     Stack,
     Divider,
     Dialog,
-    DialogTitle,
-    Link
+    DialogTitle
 } from '@mui/material'
 
 import GoogleMapsModal from './GoogleMapsEmbed'
@@ -59,7 +55,7 @@ const RestaurantDetails = props => {
                             <Grid item xs={8}>
                                 <Divider
                                     variant="middle"
-                                    sx={{ borderBottomWidth: 5 }}
+                                    sx={{ borderBottomWidth: 2 }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -75,7 +71,11 @@ const RestaurantDetails = props => {
                             {restaurant.days.map((day, index) => {
                                 return (
                                     <div key={index}>
-                                        <Grid container>
+                                        <Grid
+                                            container
+                                            sx={{
+                                                ml: { md: '100px', xs: '0px' }
+                                            }}>
                                             <Grid item xs={6} md={1}>
                                                 <Typography align="left">
                                                     {day}
@@ -90,18 +90,18 @@ const RestaurantDetails = props => {
                             })}
                         </Stack>
                     </Grid>
-                    <Grid item xs={12}>
-                        <Divider
-                            variant="middle"
-                            sx={{ borderBottomWidth: 5 }}
-                        />
-                    </Grid>
+
                     <Grid item xs={12}>
                         <Stack spacing={3}>
                             <Typography align="center" variant="h3">
                                 Located at
                             </Typography>
-
+                            <Grid item xs={12}>
+                                <Divider
+                                    variant="middle"
+                                    sx={{ borderBottomWidth: 5 }}
+                                />
+                            </Grid>
                             <Typography align="center" variant="h5">
                                 {restaurant.location}
                             </Typography>
@@ -118,15 +118,15 @@ const RestaurantDetails = props => {
                         </Stack>
                     </Grid>
                     <Grid item xs={12}>
+                        <Typography align="center" variant="h3">
+                            Contacts
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
                         <Divider
                             variant="middle"
                             sx={{ borderBottomWidth: 5 }}
                         />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Typography align="center" variant="h3">
-                            Contacts
-                        </Typography>
                     </Grid>
                     <Grid item xs={4}>
                         <Typography variant="h4">Website: </Typography>

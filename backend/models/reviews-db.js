@@ -18,7 +18,7 @@ class reviewsDB {
 
     selectRestaurantReviews(restaurant_id, callback) {
         db.query(
-            'SELECT * FROM reviews WHERE restaurant_id = ?',
+            'SELECT reviews.id, reviews.content, reviews.rating, reviews.posted_at, reviews.is_edited, users.username FROM reviews LEFT JOIN users ON users.id = reviews.user_id WHERE restaurant_id = ?',
             restaurant_id,
             callback
         )
