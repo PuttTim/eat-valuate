@@ -16,6 +16,10 @@ function getAllRestaurants(request, respond) {
             const closing = restaurant.closing.split(',').slice(0, 7)
             const opening = restaurant.opening.split(',').slice(0, 7)
             const days = restaurant.days.split(',').slice(0, 7)
+            const photo = []
+            restaurant.photo.split(',').map(image => {
+                photo.push(image)
+            })
             const website = []
             restaurant.website.split(',').map(site => {
                 if (site != 'None') {
@@ -40,7 +44,7 @@ function getAllRestaurants(request, respond) {
                 name: restaurant.name,
                 location: restaurant.location,
                 pricing: restaurant.pricing,
-                photo: restaurant.photo,
+                photo,
                 website: website,
                 email: email,
                 mobile_number: mobile_number,

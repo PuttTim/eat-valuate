@@ -5,8 +5,13 @@ const restaurantsApi = api.injectEndpoints({
         getRestaurants: builder.query({
             query: () => ({ url: `/restaurant/` }),
             method: 'GET'
+        }),
+        getRestaurantById: builder.query({
+            query: id => ({ url: `/restaurant/${id}` }),
+            method: 'GET'
         })
     })
 })
 
-export const { useGetRestaurantsQuery } = restaurantsApi
+export const { useGetRestaurantsQuery, useLazyGetRestaurantByIdQuery } =
+    restaurantsApi

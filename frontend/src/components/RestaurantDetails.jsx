@@ -17,52 +17,10 @@ import {
 
 import GoogleMapsModal from './GoogleMapsEmbed'
 
-const RestaurantDetails = () => {
+const RestaurantDetails = props => {
     const [openMaps, setOpenMaps] = useState(false)
 
-    const restaurant = {
-        id: 3,
-        name: 'Young, Nelson and Jackson',
-        location: '71362 Kelly Trace Davisburgh, MO 83041',
-        pricing: '$$$',
-        photo: [
-            'https://images.unsplash.com/photo-1515668166700-4c11137632fc?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=540&w=720',
-            'https://images.unsplash.com/photo-1613946069412-38f7f1ff0b65?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=540&w=720'
-        ],
-        website: ['order.stewartrogers.com', 'stewartrogers.com'],
-        email: ['valentineluna@gmail.com'],
-        mobile_number: ['0347793262073'],
-        days: [
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-            'Sunday'
-        ],
-        opening: [
-            '10:30',
-            '10:30',
-            '10:30',
-            '10:30',
-            '10:30',
-            '10:30',
-            '10:30'
-        ],
-        closing: [
-            '13:00',
-            '13:00',
-            '13:00',
-            '13:00',
-            '13:00',
-            '13:00',
-            '13:00'
-        ],
-        category: 'Japanese • Korean • Western',
-        avg_rating: 4.5,
-        review_count: 2
-    }
+    const restaurant = props.restaurant
 
     return (
         <>

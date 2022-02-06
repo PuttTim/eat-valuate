@@ -39,7 +39,7 @@ function RestaurantCard(props) {
                 <CardMedia
                     component="img"
                     height="160"
-                    image={restaurantData.photo}
+                    image={restaurantData.photo[0]}
                     alt="Restaurant Image"
                 />
                 <CardContent>
