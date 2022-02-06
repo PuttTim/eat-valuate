@@ -3,7 +3,7 @@ import React from 'react'
 import RestaurantList from '../components/RestaurantList'
 
 const Restaurants = () => {
-    return <RestaurantList></RestaurantList>
+    return <RestaurantList />
 }
 
 export default Restaurants

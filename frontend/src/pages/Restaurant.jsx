@@ -1,15 +1,12 @@
 import { useEffect } from 'react'
+import RestaurantDetails from '../components/RestaurantDetails'
 
 const Restaurant = () => {
     useEffect(() => {
         console.log(window.location.href)
     }, [])
 
-    return (
-        <div>
-            <h1>{window.location.href}</h1>
-        </div>
-    )
+    return <RestaurantDetails />
 }
 
 export default Restaurant
