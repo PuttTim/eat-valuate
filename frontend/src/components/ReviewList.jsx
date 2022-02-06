@@ -2,22 +2,14 @@ import { useEffect, useState } from 'react'
 import { Container, Typography, Divider, Grid, Card } from '@mui/material'
 import ReviewCard from '../components/ReviewCard'
 
-import { useLazyGetReviewByRestaurantIdQuery } from '../api/reviews'
+import { useGetReviewByRestaurantIdQuery } from '../api/reviews'
 
 const ReviewList = props => {
-    const [getReviews] = useLazyGetReviewByRestaurantIdQuery()
-
-    const [reviewsData, setReviewsData] = useState({})
-    const [isLoaded, setIsLoaded] = useState(false)
-
-    useEffect(() => {
-        getReviews(props.id)
-            .unwrap()
-            .then(response => {
-                setReviewsData(response)
-                setIsLoaded(true)
-            })
-    }, [])
+    const {
+        data: reviewsData = [],
+        isLoading,
+        error
+    } = useGetReviewByRestaurantIdQuery(props.restaurant_id)
 
     return (
         <Container maxWidth="md" sx={{ mt: '50px', mb: '50px' }}>
@@ -31,13 +23,16 @@ const ReviewList = props => {
                     <Divider variant="middle" sx={{ borderBottomWidth: 5 }} />
                 </Grid>
                 <Grid item xs={12}>
-                    {isLoaded ? (
+                    {isLoading != true ? (
                         reviewsData.length > 0 ? (
                             <Grid container spacing={3}>
                                 {reviewsData.map((review, index) => {
                                     return (
                                         <Grid item xs={12} key={index}>
-                                            <ReviewCard review={review} />
+                                            <ReviewCard
+                                                review={review}
+                                                user={props.user}
+                                            />
                                         </Grid>
                                     )
                                 })}

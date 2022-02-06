@@ -64,7 +64,6 @@ const SignUp = props => {
         registerUser(userInformation)
             .unwrap()
             .then(response => {
-                console.log(response)
                 dispatch(
                     createToast({
                         open: true,

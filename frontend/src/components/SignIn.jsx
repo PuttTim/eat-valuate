@@ -78,7 +78,6 @@ const SignIn = () => {
             })
             .catch(error => {
                 if (error) {
-                    console.table(error)
                     dispatch(
                         createToast({
                             open: true,

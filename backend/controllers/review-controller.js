@@ -16,6 +16,8 @@ function createReview(request, respond) {
         `${time.getUTCFullYear()}-${time.getUTCMonth()}-${time.getUTCDate()} ${time.getUTCHours()}:${time.getUTCMinutes()}:${time.getUTCSeconds()}`
     )
 
+    console.log(review)
+
     reviewsDB.insertReview(review, (error, results) => {
         if (error) {
             console.log(error)

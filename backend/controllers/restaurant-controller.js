@@ -38,7 +38,6 @@ function getAllRestaurants(request, respond) {
                     mobile_number.push(number)
                 }
             })
-            console.log(restaurant.photo)
             restaurantsList.push({
                 id: restaurant.id,
                 name: restaurant.name,

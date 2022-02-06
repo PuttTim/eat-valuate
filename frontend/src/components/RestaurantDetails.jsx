@@ -131,40 +131,31 @@ const RestaurantDetails = props => {
                         />
                     </Grid>
                     <Grid item xs={4}>
-                        <Typography variant="h4">Website: </Typography>
+                        <Typography variant="h5">Website: </Typography>
                         {restaurant.website.map((website, index) => {
                             return (
-                                <Typography
-                                    align="left"
-                                    variant="h5"
-                                    key={index}>
+                                <Typography align="left" key={index}>
                                     <a href={`https://${website}`}>{website}</a>
                                 </Typography>
                             )
                         })}
                     </Grid>
                     <Grid item xs={4}>
-                        <Typography variant="h4">Email: </Typography>
+                        <Typography variant="h5">Email: </Typography>
                         {restaurant.email.map((email, index) => {
                             return (
-                                <Typography
-                                    align="left"
-                                    variant="h5"
-                                    key={index}>
+                                <Typography align="left" key={index}>
                                     <a href={`mailto:${email}`}>{email}</a>
                                 </Typography>
                             )
                         })}
                     </Grid>
                     <Grid item xs={4}>
-                        <Typography variant="h4">Mobile Number: </Typography>
+                        <Typography variant="h5">Mobile Number: </Typography>
 
                         {restaurant.mobile_number.map((number, index) => {
                             return (
-                                <Typography
-                                    align="left"
-                                    variant="h5"
-                                    key={index}>
+                                <Typography align="left" key={index}>
                                     {number.replace(
                                         /\B(?=(?:\d{3})+(?!\d))/g,
                                         '-'

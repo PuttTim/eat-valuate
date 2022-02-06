@@ -68,7 +68,6 @@ const Navbar = () => {
     }
 
     useEffect(() => {
-        console.table(userAuthentication)
         if (userAuthentication.authenticated) {
             setAnchorElUser(null)
         }

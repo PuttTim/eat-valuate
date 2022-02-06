@@ -2,39 +2,61 @@ import { useEffect, useState } from 'react'
 import {
     Container,
     TextField,
-    Paper,
     Button,
-    Box,
-    Card,
     Typography,
     Grid,
     Rating,
     Stack,
-    Divider,
     Dialog,
     DialogTitle,
     DialogContent,
     DialogActions,
-    Link,
     ToggleButton,
     ToggleButtonGroup
 } from '@mui/material'
+import { useDispatch } from 'react-redux'
 
-import { useSelector } from 'react-redux'
+import { useCreateReviewMutation } from '../api/reviews'
+import { createToast } from '../app/slices/toast'
 
 const ReviewModal = props => {
-    const userAuthentication = useSelector(state => state.auth)
+    const [createReview] = useCreateReviewMutation()
+    const dispatch = useDispatch()
+
+    const restaurant_id = props.restaurant_id
+    const userAuthentication = props.user
 
     const [openModal, setOpenModal] = useState(false)
     const [submitDisable, setSubmitDisable] = useState(true)
 
     const [validateContent, setValidateContent] = useState('')
     const [content, setContent] = useState('')
-    const [rating, setRating] = useState('')
-    const [pricing, setPricing] = useState('')
+    const [rating, setRating] = useState(0)
+    const [price, setPrice] = useState('')
 
-    const handlePricingChange = (event, newPricing) => {
-        setPricing(newPricing)
+    const handleSubmit = () => {
+        createReview({
+            user_id: userAuthentication.userData.id,
+            restaurant_id: restaurant_id,
+            content: content,
+            rating: rating,
+            price: price
+        })
+            .unwrap()
+            .then(response => {
+                dispatch(
+                    createToast({
+                        open: true,
+                        anchorOrigin: {
+                            vertical: 'top',
+                            horizontal: 'center'
+                        },
+                        severity: 'success',
+                        message: 'Review Created!'
+                    })
+                )
+                setOpenModal(false)
+            })
     }
 
     const handleContentChange = event => {
@@ -46,14 +68,10 @@ const ReviewModal = props => {
         }
     }
     useEffect(() => {
-        content.length < 2000 && content.length > 1 && rating && pricing
+        content.length < 2000 && content.length > 1 && rating && price
             ? setSubmitDisable(false)
             : setSubmitDisable(true)
-    }, [content, rating, pricing])
-
-    useEffect(() => {
-        console.log(submitDisable)
-    }, [submitDisable])
+    }, [content, rating, price])
 
     return (
         <>
@@ -105,9 +123,11 @@ const ReviewModal = props => {
                                         Pricing
                                     </Typography>
                                     <ToggleButtonGroup
-                                        value={pricing}
+                                        value={price}
                                         exclusive
-                                        onChange={handlePricingChange}
+                                        onChange={(event, newPrice) => {
+                                            setPrice(newPrice)
+                                        }}
                                         size="small"
                                         sx={{ mt: '10px' }}>
                                         <ToggleButton
@@ -135,6 +155,7 @@ const ReviewModal = props => {
                         <Button
                             variant="contained"
                             disabled={submitDisable}
+                            onClick={handleSubmit}
                             sx={{ color: '#ffffff' }}>
                             Submit
                         </Button>
