@@ -1,6 +1,5 @@
 import React from 'react'
 import Carousel from 'react-material-ui-carousel'
-import Image from 'material-ui-image'
 import { Paper, Button, Box, Card } from '@mui/material'
 
 const RestaurantImage = () => {
@@ -10,12 +9,12 @@ const RestaurantImage = () => {
     ]
 
     return (
-        <Box sx={{ width: '100%', maxHeight: '540px' }}>
+        <Box>
             <Carousel>
                 {images.map((image, index) => {
                     return (
-                        <Image
-                            imageStyle={{
+                        <img
+                            style={{
                                 width: '100%',
                                 maxHeight: '540px'
                             }}
