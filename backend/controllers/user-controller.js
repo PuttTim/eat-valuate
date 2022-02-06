@@ -63,15 +63,19 @@ async function createUser(request, respond) {
 
     // SQL Query with the user defined above, with a callback to send responses.
     usersDB.insertUser(user, (error, results) => {
-        if (error) {
-            console.log(error)
-            if (error.errno === 1062) {
-                respond.status(409).json({ message: 'Duplicate username' })
-            } else {
-                respond.status(400).json({ message: 'SQL Error' })
+        try {
+            if (error) {
+                console.log(error)
+                if (error.errno === 1062) {
+                    respond.status(409).json({ message: 'Duplicate username' })
+                } else {
+                    respond.status(400).json({ message: 'SQL Error' })
+                }
+            } else if (results) {
+                respond.status(202).json({ message: 'User created' })
             }
-        } else if (results) {
-            respond.status(202).json({ message: 'User created' })
+        } catch {
+            console.log(error)
         }
     })
 }

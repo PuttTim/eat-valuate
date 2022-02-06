@@ -6,7 +6,7 @@ import RestaurantImage from '../components/RestaurantImage'
 import { useGetRestaurantsQuery } from '../api/restaurants'
 
 const Home = () => {
-    const { data: restaurantData, isLoading } = useGetRestaurantsQuery()
+    const { data: restaurantData = [], isLoading } = useGetRestaurantsQuery()
 
     const allPhotos = []
 

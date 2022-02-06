@@ -3,8 +3,8 @@ import api from './api'
 const usersApi = api.injectEndpoints({
     endpoints: builder => ({
         getUserById: builder.query({
-            query: id => ({ url: `/user/${id}` }),
-            method: 'GET'
+            query: id => ({ url: `/user/${id}`, method: 'GET' }),
+            invalidatesTags: ['Restaurant']
         }),
         registerUser: builder.mutation({
             query: user => ({
