@@ -1,9 +1,13 @@
-import React from 'react'
+import { useEffect } from 'react'
 
 const Restaurant = () => {
+    useEffect(() => {
+        console.log(window.location.href)
+    }, [])
+
     return (
         <div>
-            <h1>Restaurant</h1>
+            <h1>{window.location.href}</h1>
         </div>
     )
 }

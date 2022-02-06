@@ -24,8 +24,14 @@ function RestaurantCard(props) {
 
     return (
         <Card
-            elevation={5}
-            sx={{ maxWidth: 300, minHeight: 320, maxHeight: 320 }}>
+            elevation={3}
+            sx={{
+                maxWidth: 300,
+                minHeight: 320,
+                maxHeight: 320,
+                mt: '30px',
+                mr: '20px'
+            }}>
             <CardActionArea
                 onClick={() => {
                     navigateTo(restaurantData.id)
@@ -38,7 +44,7 @@ function RestaurantCard(props) {
                 />
                 <CardContent>
                     <Typography noWrap>{restaurantData.name}</Typography>
-                    <Grid container sx={{ mt: '10px' }}>
+                    <Grid container>
                         <Grid item xs={6}>
                             <Rating
                                 value={restaurantData.avg_rating}
@@ -55,10 +61,10 @@ function RestaurantCard(props) {
                     <Typography>{restaurantData.category}</Typography>
                 </CardContent>
                 <Divider variant="middle" />
-                <CardActions>
+                <CardContent>
                     <Grid container>
                         <Grid item xs={10}>
-                            <Typography noWrap sx={{ ml: '10px' }}>
+                            <Typography noWrap>
                                 {restaurantData.location}
                             </Typography>
                         </Grid>
@@ -68,7 +74,7 @@ function RestaurantCard(props) {
                             </Typography>
                         </Grid>
                     </Grid>
-                </CardActions>
+                </CardContent>
             </CardActionArea>
         </Card>
     )
