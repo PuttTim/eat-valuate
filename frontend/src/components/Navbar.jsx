@@ -235,66 +235,17 @@ const Navbar = () => {
                                 Home
                             </Button>
 
-                            <Stack
-                                onMouseEnter={handleMouseOver}
-                                direction="row"
-                                spacing={1}
-                                sx={{ marginLeft: '20px' }}>
-                                <Button
-                                    variant="text"
-                                    disableRipple
-                                    sx={{
-                                        fontSize: '20px'
-                                    }}>
-                                    Restaurants
-                                    {Boolean(anchorEl) ? (
-                                        <ArrowDropUpIcon
-                                            sx={{
-                                                color: '#000000',
-                                                fontSize: '36px'
-                                            }}
-                                        />
-                                    ) : (
-                                        <ArrowDropDownIcon
-                                            sx={{
-                                                color: '#000000',
-                                                fontSize: '36px'
-                                            }}
-                                        />
-                                    )}
-                                </Button>
-
-                                <Menu
-                                    autoFocus={false}
-                                    anchorEl={anchorEl}
-                                    open={Boolean(anchorEl)}
-                                    onClose={handleClose}
-                                    MenuListProps={{
-                                        onMouseLeave: handleClose
-                                    }}>
-                                    <MenuItem
-                                        onClick={() => {
-                                            handleClose()
-                                            navigateTo('restaurants/top')
-                                        }}>
-                                        Top Restaurants
-                                    </MenuItem>
-                                    <MenuItem
-                                        onClick={() => {
-                                            handleClose()
-                                            navigateTo('restaurants')
-                                        }}>
-                                        All Restaurants
-                                    </MenuItem>
-                                    <MenuItem
-                                        onClick={() => {
-                                            handleClose()
-                                            navigateTo('restaurants/search')
-                                        }}>
-                                        Search Restaurants
-                                    </MenuItem>
-                                </Menu>
-                            </Stack>
+                            <Button
+                                variant="text"
+                                disableRipple
+                                onClick={() => {
+                                    navigateTo('restaurants')
+                                }}
+                                sx={{
+                                    fontSize: '20px'
+                                }}>
+                                Restaurants
+                            </Button>
                         </Box>
 
                         {userAuthentication.authenticated ? (
@@ -304,10 +255,7 @@ const Navbar = () => {
                                     display: { xs: 'none', md: 'flex' }
                                 }}>
                                 <Tooltip title="User Profile">
-                                    <Button
-                                        onClick={() => {
-                                            navigateTo('profile')
-                                        }}>
+                                    <Button>
                                         {userAuthentication.userData.username}
                                     </Button>
                                 </Tooltip>

@@ -18,15 +18,6 @@ const Restaurant = () => {
         error
     } = useGetRestaurantByIdQuery(restaurant_id)
 
-    // useEffect(() => {
-    //     getRestaurant(restaurant_id)
-    //         .unwrap()
-    //         .then(response => {
-    //             setRestaurant(response)
-    //             setLoaded(true)
-    //         })
-    // }, [])
-
     return (
         <>
             {isLoading != true ? (

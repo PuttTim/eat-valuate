@@ -1,9 +1,13 @@
-import React from 'react'
+import { useEffect } from 'react'
 import Carousel from 'react-material-ui-carousel'
 import { Paper, Button, Box, Card } from '@mui/material'
 
 const RestaurantImage = props => {
     const images = props.photo
+
+    useEffect(() => {
+        console.log(images)
+    }, [images])
 
     return (
         <Box>
