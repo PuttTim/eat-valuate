@@ -8,10 +8,6 @@ import RestaurantCard from '../components/RestaurantCard'
 const RestaurantList = () => {
     const { data: restaurantData, isLoading } = useGetRestaurantsQuery()
 
-    useEffect(() => {
-        console.log(restaurantData)
-    }, [isLoading, restaurantData])
-
     return (
         <Container maxWidth="lg" sx={{ mt: '50px' }}>
             {isLoading ? (

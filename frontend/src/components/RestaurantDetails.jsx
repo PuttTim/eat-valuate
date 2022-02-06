@@ -24,7 +24,9 @@ const RestaurantDetails = props => {
                 onClose={() => {
                     !setOpenMaps(false)
                 }}
-                open={openMaps}>
+                open={openMaps}
+                fullWidth
+                maxWidth="md">
                 <DialogTitle>Google Maps</DialogTitle>
                 <GoogleMapsModal location={restaurant.location} />
             </Dialog>

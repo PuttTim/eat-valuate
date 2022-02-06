@@ -7,6 +7,7 @@ import { useLazyGetRestaurantByIdQuery } from '../api/restaurants'
 import RestaurantDetails from '../components/RestaurantDetails'
 import RestaurantImage from '../components/RestaurantImage'
 import ReviewList from '../components/ReviewList'
+import ReviewModal from '../components/ReviewModal'
 
 const Restaurant = () => {
     const [getRestaurant] = useLazyGetRestaurantByIdQuery()
@@ -30,7 +31,7 @@ const Restaurant = () => {
                 <>
                     <RestaurantImage photo={restaurant.photo} />
                     <RestaurantDetails restaurant={restaurant} />
-
+                    <ReviewModal id={restaurant_id} />
                     <ReviewList id={restaurant_id} />
                 </>
             ) : (

@@ -1,25 +1,19 @@
 import React from 'react'
 import {
-    Container,
-    Paper,
-    Button,
-    Box,
     Card,
+    CardContent,
     Typography,
     Grid,
     Rating,
     Stack,
-    Divider,
-    Dialog,
-    DialogTitle,
-    Link
+    TextField
 } from '@mui/material'
 
 const ReviewCard = props => {
     const review = props.review
 
     return (
-        <Card elevation={3} sx={{ pt: '10px', pb: '20px' }}>
+        <Card elevation={3} sx={{ pt: '10px' }}>
             <Grid container>
                 <Grid item xs={9}>
                     <Typography variant="h4" sx={{ ml: '10px' }}>
@@ -39,11 +33,17 @@ const ReviewCard = props => {
                 </Grid>
             </Grid>
 
-            <Card variant="outlined" sx={{ ml: '10px', mr: '10px' }}>
-                <Typography paragraph sx={{ ml: '10px', mt: '10px' }}>
-                    {review.content}
-                </Typography>
-            </Card>
+            <TextField
+                variant="outlined"
+                fullWidth
+                multiline
+                rows={5}
+                disabled
+                inputProps={{
+                    style: { '-webkit-text-fill-color': '#000000' },
+                    sx: { pr: '10px' }
+                }}
+                value={review.content}></TextField>
         </Card>
     )
 }
